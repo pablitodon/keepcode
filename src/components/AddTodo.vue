@@ -1,9 +1,8 @@
 <template>
-  <div class="add-todo">
-    <input type="text" v-model="title" placeholder="Добавь новую задачу" @keyup.enter="handleSubmit"
-      class="add-todo_input" />
-    <button @click="handleSubmit" type="button" class="add-todo_button">Add</button>
-  </div>
+  <form class="add" @submit.prevent="handleSubmit">
+    <input type="text" v-model="title" placeholder="Добавь новую задачу" class="add__input" />
+    <button type="submit" class="add__button">Добавить</button>
+  </form>
 </template>
 
 <script lang="ts" setup>
@@ -21,13 +20,13 @@ const handleSubmit = () => {
 </script>
 
 <style lang="scss" scoped>
-.add-todo {
+.add {
   display: flex;
   gap: 10px;
   margin-top: 1rem;
   margin-bottom: 1.2rem;
 
-  &_input {
+  &__input {
     flex-grow: 1;
     padding: 0.8rem;
     border: 1px solid #e0e0e0;
@@ -46,18 +45,18 @@ const handleSubmit = () => {
     }
   }
 
-  &_button {
+  &__button {
     padding: 10px 20px;
     border: none;
     border-radius: 8px;
-    background-color: #615e5e;
+    background-color: #00cec9; // Бирюзовый цвет
     color: white;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
 
     &:hover {
-      background-color: #757474;
+      background-color: #00b4b1;
       transform: translateY(-2px);
     }
 
@@ -68,16 +67,16 @@ const handleSubmit = () => {
 }
 
 @media (max-width: 480px) {
-  .add-todo {
+  .add {
     flex-direction: column;
     gap: 8px;
 
-    &_input {
+    &__input {
       width: 100%;
       padding: 12px;
     }
 
-    &_button {
+    &__button {
       width: 100%;
       padding: 12px;
     }

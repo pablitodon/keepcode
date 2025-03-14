@@ -1,3 +1,34 @@
+<template>
+  <div>
+    <div v-for="todo in todos" :key="todo.id" class="item">
+      <div v-if="todo.id !== editingTodoId" class="item__content">
+        <span class="item__text" :class="{ 'item__text--completed': todo.completed }">
+          {{ todo.title }}
+        </span>
+        <div class="item__actions">
+          <button class="item__button item__button--edit" @click="startEdit(todo.id)">
+            Изменить
+          </button>
+          <button class="item__button item__button--complete" @click="$emit('complete:title', todo.id)">
+            {{ todo.completed ? 'Не готов' : 'Готов' }}
+          </button>
+          <button class="item__button item__button--delete" @click="$emit('delete:title', todo.id)">
+            Удалить
+          </button>
+        </div>
+      </div>
+
+      <div v-else class="item__edit">
+        <input type="text" :value="editingText" @input="handleEditText" @blur="saveEdit(todo.id)"
+          @keyup.enter="saveEdit(todo.id)" class="item__input" placeholder="Изменить задачу" />
+        <button class="item__button item__button--save" @click="saveEdit(todo.id)">
+          Сохранить
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script lang="ts" setup>
 import { ref } from 'vue';
 import type { ITodo } from '../types/types';
@@ -36,28 +67,6 @@ const saveEdit = (id: number) => {
 };
 </script>
 
-<template>
-  <div>
-    <div v-for="todo in todos" :key="todo.id" class="item">
-      <div v-if="todo.id !== editingTodoId" class="item_content" @dblclick="startEdit(todo.id)">
-        <span :class="{ completed: todo.completed }">{{ todo.title }}</span>
-        <div class="item_actions">
-          <button class="btn complete_btn" @click="$emit('complete:title', todo.id)">
-            {{ todo.completed ? 'Не готов' : 'Готов' }}
-          </button>
-          <button class="btn delete_btn" @click="$emit('delete:title', todo.id)">Удалить</button>
-        </div>
-      </div>
-
-      <div v-else class="item_edit">
-        <input type="text" :value="editingText" @input="handleEditText" @blur="saveEdit(todo.id)"
-          @keyup.enter="saveEdit(todo.id)" class="edit_input" placeholder="Edit task" />
-        <button class="btn save_btn" @click="saveEdit(todo.id)">Сохранить</button>
-      </div>
-    </div>
-  </div>
-</template>
-
 <style lang="scss" scoped>
 .item {
   display: flex;
@@ -77,52 +86,57 @@ const saveEdit = (id: number) => {
   }
 }
 
-.item_content {
+.item__content {
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-grow: 1;
   gap: 10px;
+  width: 100%;
+}
 
-  span {
-    flex-grow: 1;
-    font-size: 16px;
-    color: #333;
+.item__text {
+  flex-grow: 1;
+  font-size: 16px;
+  color: #333;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
 
-    &.completed {
-      text-decoration: line-through;
-      color: #888;
-    }
+  &--completed {
+    text-decoration: line-through;
+    color: #888;
   }
 }
 
-.item_actions {
+.item__actions {
   display: flex;
   gap: 8px;
 }
 
-.item_edit {
+.item__edit {
   display: flex;
   align-items: center;
   gap: 10px;
   width: 100%;
+}
 
-  .edit_input {
-    flex-grow: 1;
-    padding: 8px;
-    border: 1px solid #e0e0e0;
-    border-radius: 4px;
-    font-size: 16px;
-    outline: none;
-    transition: border-color 0.3s ease;
+.item__input {
+  flex-grow: 1;
+  padding: 8px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s ease;
 
-    &:focus {
-      border-color: #615e5e;
-    }
+  &:focus {
+    border-color: #615e5e;
   }
 }
 
-.btn {
+.item__button {
   padding: 8px 12px;
   border: none;
   border-radius: 4px;
@@ -135,35 +149,34 @@ const saveEdit = (id: number) => {
   &:hover {
     transform: scale(1.05);
   }
-}
 
-.complete_btn {
-  background-color: #615e5e;
-  color: white;
+  &--complete {
+    background-color: #28a745;
+    color: white;
 
-  &:hover {
-    background-color: #757474;
+    &:hover {
+      background-color: #218838;
+    }
+  }
+
+  &--delete {
+    background-color: #ff4d4d;
+    color: white;
+
+    &:hover {
+      background-color: #ff6666;
+    }
+  }
+
+  &--save {
+    background-color: #751554;
+    color: white;
+
+    &:hover {
+      background-color: #4e0b35;
+    }
   }
 }
-
-.delete_btn {
-  background-color: #ff4d4d;
-  color: white;
-
-  &:hover {
-    background-color: #ff6666;
-  }
-}
-
-.save_btn {
-  background-color: #28a745;
-  color: white;
-
-  &:hover {
-    background-color: #218838;
-  }
-}
-
 
 @media (max-width: 480px) {
   .item {
@@ -171,20 +184,31 @@ const saveEdit = (id: number) => {
     align-items: center;
   }
 
-  .item_actions {
+  .item__content {
     flex-direction: column;
+    align-items: flex-start;
   }
 
-  .item_edit {
+  .item__text {
+    max-width: 100%;
+  }
+
+  .item__actions {
+    flex-direction: row;
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .item__edit {
     flex-direction: column;
     gap: 8px;
   }
 
-  .edit_input {
+  .item__input {
     width: 100%;
   }
 
-  .btn {
+  .item__button {
     width: 100%;
     padding: 10px;
   }
