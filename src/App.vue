@@ -34,7 +34,7 @@ const handleAddTodo = (title: string) => {
     completed: false,
     userId: todos.value.length + 1
   };
-  todos.value.push(newTodo);
+  todos.value.unshift(newTodo);
   saveToLocalStorage(todos.value);
 };
 
