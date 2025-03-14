@@ -1,14 +1,14 @@
 <template>
     <section class="filter">
-        <button class="filter__button" :class="{ 'filter__button--active': filter === 'all' }"
+        <button class="filter__button" :class="{ 'filter__button--active': props.filter === 'all' }"
             @click="handleFilterChange(FILTERS.ALL)">
             Все
         </button>
-        <button class="filter__button" :class="{ 'filter__button--active': filter === 'active' }"
+        <button class="filter__button" :class="{ 'filter__button--active': props.filter === 'active' }"
             @click="handleFilterChange(FILTERS.ACTIVE)">
             Активные
         </button>
-        <button class="filter__button" :class="{ 'filter__button--active': filter === 'completed' }"
+        <button class="filter__button" :class="{ 'filter__button--active': props.filter === 'completed' }"
             @click="handleFilterChange(FILTERS.COMPLETED)">
             Завершённые
         </button>
