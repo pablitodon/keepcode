@@ -1,5 +1,63 @@
-# Vue 3 + TypeScript + Vite
+# TodoList на Vue.js
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Простое приложение для управления задачами (TodoList), созданное с использованием Vue.js, TypeScript и Vite.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+---
+
+## Особенности
+
+- Добавление, редактирование и удаление задач.
+- Отметка задач как выполненных.
+- Фильтрация задач: все, активные, выполненные.
+- Адаптивный дизайн для мобильных устройств.
+- Сохранение задач в локальном хранилище (localStorage).
+
+---
+
+## Технологии
+
+- **Vue.js 3** — прогрессивный фреймворк для создания пользовательских интерфейсов.
+- **TypeScript** — язык для типизации JavaScript.
+- **Vite** — быстрый инструмент для сборки и разработки.
+- **SCSS** — препроцессор для стилей.
+
+---
+
+## Установка
+
+1. Клонируйте репозиторий:
+
+   ```bash
+   git clone https://github.com/ваш-username/ваш-репозиторий.git
+Перейдите в папку проекта:
+
+bash
+Copy
+cd ваш-репозиторий
+Установите зависимости:
+
+```bash
+
+npm install
+```
+или
+
+```bash
+
+yarn install
+```
+## Запуск проекта
+### Режим разработки
+Запустите сервер для разработки:
+
+```bash
+
+npm run dev
+```
+или
+
+```bash
+
+yarn dev
+```
+Откройте http://localhost:5173 в браузере.
