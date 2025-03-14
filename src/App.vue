@@ -2,11 +2,11 @@
 import { ref, onMounted, computed } from 'vue';
 import AddTodo from './components/AddTodo.vue';
 import TodoList from './components/TodoList.vue';
-import type { ITodo } from './types/types';
+import type { Filters, ITodo } from './types/types';
 import { getTasks } from './api/api';
 
 
-const filter = ref<'all' | 'active' | 'completed'>('all');
+const filter = ref<Filters>('all');
 const todos = ref<ITodo[]>([])
 
 const saveToLocalStorage = (todos: ITodo[]) => {
